@@ -1,0 +1,9 @@
+# Python
+__pycache__
+.venv
+*.whl
+
+# Other
+.env
+*.log
+~*
