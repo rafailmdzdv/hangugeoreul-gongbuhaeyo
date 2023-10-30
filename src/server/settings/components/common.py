@@ -9,6 +9,9 @@ from server.settings.components import config
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 INSTALLED_APPS: Tuple[str, ...] = (
+    # Project apps
+    'server.apps.users',
+
     # Default django apps:
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -119,6 +122,7 @@ AUTHENTICATION_BACKENDS = (
     'axes.backends.AxesBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+AUTH_USER_MODEL = 'users.User'
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
