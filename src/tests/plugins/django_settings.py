@@ -33,3 +33,9 @@ def _debug(settings: LazySettings) -> None:
     settings.DEBUG = False
     for template in settings.TEMPLATES:
         template['OPTIONS']['debug'] = True
+
+
+@pytest.fixture(autouse=True)
+def _auth_user_model(settings: LazySettings) -> None:
+    """Use defined `User` model."""
+    settings.AUTH_USER_MODEL = 'users.User'
