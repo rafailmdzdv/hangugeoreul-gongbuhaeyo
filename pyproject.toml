@@ -38,7 +38,15 @@ pytest = "^7.4"
 pytest-django = "^4.5"
 django-test-migrations = "^1.3"
 
+pyright = "^1.1.333"
+
 django-stubs = { version = "^4.2.6" }
+
+[tool.pyright]
+include = ['src']
+pythonVersion = '3.11'
+verboseOutput = true
+ignore = ['**/server/settings/*']
 
 [build-system]
 requires = ["poetry-core"]
