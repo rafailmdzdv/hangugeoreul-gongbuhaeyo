@@ -1,3 +1,4 @@
+"""Admin settings for `User` model."""
 from django.contrib import admin
 
 from server.apps.users.models import User

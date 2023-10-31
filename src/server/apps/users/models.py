@@ -1,3 +1,4 @@
+"""Module with models to representate users."""
 import uuid
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
