@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/pycqa/flake8
+    rev: "6.1.0"
+    hooks:
+      - id: flake8
+
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.333
+    hooks:
+      - id: pyright
+
+  # Django Migrations Linter
+  - repo: local
+    hooks:
+      - id: pre-commit-django-migration-lint
+        name: Lint Django migrations
+        entry: ./src/manage.py lintmigrations
+        language: system
+        pass_filenames: false
+
+  # Pytest
+  - repo: local
+    hooks:
+      - id: pytest-check
+        name: pytest-check
+        entry: pytest
+        language: system
+        pass_filenames: false
+        always_run: true
