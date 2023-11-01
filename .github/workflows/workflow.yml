@@ -42,7 +42,7 @@ jobs:
         run: echo '${{ secrets.PROJECT_ENVS }}' > src/config/.env
 
       - name: Migrate
-        run: poetry run python3.11 src/manage.py migrate
+        run: poetry run python src/manage.py migrate
 
       - name: Install dependencies
         run: poetry install --no-interaction
@@ -52,6 +52,9 @@ jobs:
 
       - name: Lint with pyright
         run: poetry run pyright
+
+      - name: Lint migrations
+        run: poetry run python src/manage.py lintmigrations
 
       - name: Test with pytest
         run: poetry run pytest
