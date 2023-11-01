@@ -25,7 +25,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         auto_now_add=True,
     )
     is_staff = models.BooleanField(
-        verbose_name=gettext_lazy('Is user a staff'),
+        verbose_name=gettext_lazy('staff status'),
         default=False,
     )
 
