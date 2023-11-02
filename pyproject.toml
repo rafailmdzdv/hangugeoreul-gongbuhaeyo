@@ -44,7 +44,8 @@ django-stubs = { version = "^4.2.6" }
 pre-commit = "^3.5.0"
 
 [tool.pyright]
-include = ['src']
+venvPath = '.'
+venv = '.venv'
 pythonVersion = '3.11'
 verboseOutput = true
 ignore = ['**/server/settings/*']
