@@ -4,7 +4,7 @@ from typing import Dict, List, Tuple, Union
 
 from django.utils.translation import gettext_lazy as _
 
-from server.settings.components import config
+from server.settings.components import BASE_DIR, config
 
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 
@@ -107,6 +107,9 @@ TEMPLATES = [{
 LANGUAGE_CODE = 'en-us'
 
 USE_I18N = True
+LOCALE_PATHS = [
+    BASE_DIR / 'locale/',
+]
 
 LANGUAGES = (
     ('en', _('English')),
