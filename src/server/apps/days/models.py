@@ -1,9 +1,10 @@
 """Module with models to representate days."""
-import uuid
 from typing import Final
 
 from django.db import models
 from django.utils.translation import gettext_lazy
+
+from server.settings.components.fields import DEFAULT_ID_PARAMS
 
 _MEANING_LENGTH: Final = 40
 _TRANSLATION_LENGTH: Final = 70
@@ -12,11 +13,7 @@ _TRANSLATION_LENGTH: Final = 70
 class StudyDay(models.Model):
     """StudyDay model with required fields."""
 
-    id = models.UUIDField(
-        verbose_name=gettext_lazy('Id'),
-        primary_key=True,
-        default=uuid.uuid4,
-    )
+    id = models.UUIDField(**DEFAULT_ID_PARAMS)
     title = models.IntegerField(
         verbose_name=gettext_lazy('Title'),
         unique=True,
@@ -36,11 +33,7 @@ class StudyDay(models.Model):
 class Word(models.Model):
     """Word of study day with required fields."""
 
-    id = models.UUIDField(
-        verbose_name=gettext_lazy('Id'),
-        primary_key=True,
-        default=uuid.uuid4,
-    )
+    id = models.UUIDField(**DEFAULT_ID_PARAMS)
     meaning = models.CharField(
         max_length=_MEANING_LENGTH,
         verbose_name=gettext_lazy('Meaning'),
