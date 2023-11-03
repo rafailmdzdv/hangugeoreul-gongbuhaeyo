@@ -1,21 +1,16 @@
 """Module with models to representate users."""
-import uuid
-
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy
 
 from server.apps.users.infrastructure.managers import UserManager
+from server.settings.components.fields import DEFAULT_ID_PARAMS
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     """User model with required fields."""
 
-    id = models.UUIDField(
-        verbose_name=gettext_lazy('Id'),
-        primary_key=True,
-        default=uuid.uuid4,
-    )
+    id = models.UUIDField(**DEFAULT_ID_PARAMS)
     email = models.EmailField(
         verbose_name=gettext_lazy('Email'),
         unique=True,
