@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-02 15:59+0000\n"
+"POT-Creation-Date: 2023-11-03 18:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,12 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: src/server/apps/days/models.py:12 src/server/apps/users/models.py:15
+#: src/server/apps/days/apps.py:9 src/server/apps/days/models.py:25
+msgid "Study days"
+msgstr "Учебные дни"
+
+#: src/server/apps/days/models.py:12 src/server/apps/days/models.py:36
+#: src/server/apps/users/models.py:15
 msgid "Id"
 msgstr "ID"
 
@@ -32,9 +37,25 @@ msgstr "Заголовок"
 msgid "Study day"
 msgstr "Учебный день"
 
-#: src/server/apps/days/models.py:25
-msgid "Study days"
-msgstr "Учебные дни"
+#: src/server/apps/days/models.py:42
+msgid "Meaning"
+msgstr "Значение"
+
+#: src/server/apps/days/models.py:47
+msgid "Translation"
+msgstr "Перевод"
+
+#: src/server/apps/days/models.py:52
+msgid "Day"
+msgstr "День"
+
+#: src/server/apps/days/models.py:59
+msgid "Word"
+msgstr "Слово"
+
+#: src/server/apps/days/models.py:60
+msgid "Words"
+msgstr "Слова"
 
 #: src/server/apps/users/apps.py:9 src/server/apps/users/models.py:40
 msgid "users"
@@ -56,10 +77,10 @@ msgstr "Статус персонала"
 msgid "User"
 msgstr "Пользователь"
 
-#: src/server/settings/components/common.py:112
+#: src/server/settings/components/common.py:115
 msgid "English"
 msgstr "Английский"
 
-#: src/server/settings/components/common.py:113
+#: src/server/settings/components/common.py:116
 msgid "Russian"
 msgstr "Русский"
