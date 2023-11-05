@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Word",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "meaning": {
+      "type": "string"
+    },
+    "translation": {
+      "type": "string"
+    }
+  },
+  "required": ["meaning", "translation"]
+}

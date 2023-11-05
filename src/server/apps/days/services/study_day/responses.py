@@ -5,6 +5,8 @@ from rest_framework.response import Response
 
 from server.apps.days.models import StudyDay
 from server.services.responses import BaseResponse
+from server.services.schema import FileSchema
+from server.services.serializer import ModelSerializer
 
 
 @final
@@ -17,17 +19,9 @@ class StudyDayListGETResponse(BaseResponse):
         :return: Rendered response
         """
         return Response(
-            {
-                'id': day.pk,
-                'title': day.title,
-                'words': (
-                    {
-                        'id': word.pk,
-                        'meaning': word.meaning,
-                        'translation': word.translation,
-                    }
-                    for word in day.words.all()  # type: ignore
-                ),
-            }
+            ModelSerializer(
+                day,
+                FileSchema(day),
+            ).serialize()
             for day in StudyDay.objects.all().prefetch_related('words')
         )

@@ -23,6 +23,7 @@ python-decouple = "^3.8"
 structlog = "^23.2"
 djangorestframework = "^3.14.0"
 jsonschema = "^4.19.2"
+jsonpath-ng = "^1.6.0"
 
 [tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^4.2"
@@ -51,6 +52,7 @@ venv = '.venv'
 pythonVersion = '3.11'
 verboseOutput = true
 ignore = ['**/server/settings/*']
+reportGeneralTypeIssues = false
 
 [build-system]
 requires = ["poetry-core"]
