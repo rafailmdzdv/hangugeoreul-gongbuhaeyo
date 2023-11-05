@@ -7,9 +7,14 @@ from django.contrib.admindocs import urls as admindocs_urls
 from django.urls import include, path
 from health_check import urls as health_urls
 
+from server.apps.days import urls as days_urls
+
 admin.autodiscover()
 
 urlpatterns = [
+    # Applications
+    path('days/', include(days_urls, namespace='days')),
+
     # Health checks:
     path('health/', include(health_urls)),
 

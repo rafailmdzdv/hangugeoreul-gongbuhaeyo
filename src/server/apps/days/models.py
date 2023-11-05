@@ -47,7 +47,7 @@ class Word(models.Model):
     day = models.ForeignKey(
         StudyDay,
         verbose_name=gettext_lazy('Day'),
-        related_name='study_days',
+        related_name='words',
         on_delete=models.CASCADE,
     )
 
