@@ -26,6 +26,7 @@ INSTALLED_APPS: Tuple[str, ...] = (
 
     # Security:
     'axes',
+    'corsheaders',
 
     # Health checks:
     # You may want to enable other checks as well,
@@ -42,6 +43,8 @@ MIDDLEWARE: Tuple[str, ...] = (
 
     # Content Security Policy:
     'csp.middleware.CSPMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 
     # Django:
     'django.middleware.security.SecurityMiddleware',
@@ -147,3 +150,7 @@ REFERRER_POLICY = 'same-origin'
 PERMISSIONS_POLICY: Dict[str, Union[str, List[str]]] = {}  # noqa: WPS234
 
 EMAIL_TIMEOUT = 5
+
+CORS_ALLOWED_ORIGINS = (
+    config('FRONTEND_HOST'),
+)
