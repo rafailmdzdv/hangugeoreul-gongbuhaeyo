@@ -1,0 +1,12 @@
+Makefile
+*.yaml
+*.md
+.renovaterc
+
+# Python
+.venv
+__pycache__/
+.pytest_cache
+*.cfg
+
+**/.env
