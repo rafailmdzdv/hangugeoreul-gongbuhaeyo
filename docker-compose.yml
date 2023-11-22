@@ -9,6 +9,7 @@ services:
       - 8000
     volumes:
       - ./src/config/.env:/app/src/config/.env
+      - app_vol:/app
     command: >
       bash -c "
       /app/.venv/bin/python /app/src/manage.py migrate
@@ -33,5 +34,23 @@ services:
       - 443:443
     volumes:
       - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./ssl/certbot/conf:/etc/letsencrypt
+      - ./ssl/certbot/www:/var/www/certbot
     depends_on:
       - app
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./ssl/certbot/conf:/etc/letsencrypt
+      - ./ssl/certbot/www:/var/www/certbot
+      - app_vol:/app
+    depends_on:
+      - nginx
+    command: >
+      certonly --webroot --webroot-path=/app \
+      --email rafayt323@gmail.com --agree-tos \
+      --no-eff-email -d api.hangugeo.rafailmedzhidov.ru
+
+volumes:
+  app_vol:
