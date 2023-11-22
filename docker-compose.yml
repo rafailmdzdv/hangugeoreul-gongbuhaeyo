@@ -32,6 +32,7 @@ services:
     ports:
       - 80:80
       - 443:443
+    restart: unless-stopped
     volumes:
       - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./ssl/certbot/conf:/etc/letsencrypt
@@ -45,11 +46,12 @@ services:
       - ./ssl/certbot/conf:/etc/letsencrypt
       - ./ssl/certbot/www:/var/www/certbot
       - app_vol:/app
+    restart: unless-stopped
     depends_on:
       - nginx
     command: >
-      certonly --webroot --webroot-path=/app \
-      --email rafayt323@gmail.com --agree-tos \
+      certonly --webroot --webroot-path=/app
+      --email rafayt323@gmail.com --agree-tos
       --no-eff-email -d api.hangugeo.rafailmedzhidov.ru
 
 volumes:
