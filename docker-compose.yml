@@ -5,6 +5,8 @@ services:
     image: rafailmdzdv/hangugeoreul-backend:latest
     ports:
       - 8001:8000
+    expose:
+      - 8000
     volumes:
       - ./src/config/.env:/app/src/config/.env
     command: >
@@ -23,3 +25,13 @@ services:
       - 5432
     env_file:
       - ./src/config/.env
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
