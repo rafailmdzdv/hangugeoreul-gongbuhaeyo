@@ -12,6 +12,7 @@ services:
     command: >
       bash -c "
       /app/.venv/bin/python /app/src/manage.py migrate
+      && /app/.venv/bin/python /app/src/manage.py collectstatic --no-input --dry-run --clear
       && /app/.venv/bin/python /app/src/manage.py runserver 0.0.0.0:8000
       "
     depends_on:
