@@ -10,7 +10,7 @@ services:
     volumes:
       - ./src/config/.env:/app/src/config/.env
       - static_files:/var/www/django/static
-      - socket_file:/run/hangugeo_backend.sock
+      - run_dir:/run
     command: >
       bash -c "
       /app/.venv/bin/python /app/src/manage.py migrate
@@ -38,10 +38,10 @@ services:
       - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf
       - /etc/letsencrypt:/etc/letsencrypt
       - static_files:/var/www/django/static
-      - socket_file:/run/hangugeo_backend.sock
+      - run_dir:/run
     depends_on:
       - app
 
 volumes:
   static_files:
-  socket_file:
+  run_dir:
