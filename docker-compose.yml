@@ -9,7 +9,7 @@ services:
       - 8000
     volumes:
       - ./src/config/.env:/app/src/config/.env
-      - /var/www/django/static:/var/www/django/static
+      - static_files:/var/www/django/static
     command: >
       bash -c "
       /app/.venv/bin/python /app/src/manage.py migrate
@@ -36,6 +36,9 @@ services:
     volumes:
       - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf
       - /etc/letsencrypt:/etc/letsencrypt
-      - /var/www/django/static:/var/www/django/static
+      - static_files:/var/www/django/static
     depends_on:
       - app
+
+volumes:
+  - static_files:
