@@ -15,7 +15,7 @@ services:
       bash -c "
       /app/.venv/bin/python /app/src/manage.py migrate
       && /app/.venv/bin/python /app/src/manage.py collectstatic --no-input --dry-run --clear
-      && /app/.venv/bin/gunicorn --bind /run/hangugeo_backend.sock --workers $(expr $(nproc) + 1) --access-logfile gunicorn.log --chdir /app/src server.wsgi:application
+      && /app/.venv/bin/gunicorn --bind unix:///run/hangugeo_backend.sock --workers $(expr $(nproc) + 1) --access-logfile gunicorn.log --chdir /app/src server.wsgi:application
       "
     depends_on:
       - db
