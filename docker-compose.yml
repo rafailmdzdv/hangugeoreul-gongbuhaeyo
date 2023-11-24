@@ -41,4 +41,4 @@ services:
       - app
 
 volumes:
-  - static_files:
+  static_files:
