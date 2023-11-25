@@ -25,6 +25,7 @@ djangorestframework = "^3.14.0"
 jsonschema = "^4.19.2"
 jsonpath-ng = "^1.6.0"
 django-cors-headers = "^4.3.0"
+drf-yasg = "^1.21.7"
 
 [tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^4.2"

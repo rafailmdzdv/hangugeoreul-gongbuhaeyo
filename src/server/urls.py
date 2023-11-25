@@ -8,6 +8,7 @@ from django.urls import include, path
 from health_check import urls as health_urls
 
 from server.apps.days import urls as days_urls
+from server.apps.swagger import urls as swagger_urls
 
 admin.autodiscover()
 
@@ -22,6 +23,8 @@ urlpatterns = [
     path('admin/doc/', include(admindocs_urls)),
     path('admin/', admin.site.urls),
 ]
+# Add swagger urls
+urlpatterns.extend(swagger_urls.urlpatterns)
 
 if settings.DEBUG:
 
