@@ -6,6 +6,10 @@ values are overridden.
 """
 
 from server.settings.components import config
+from server.settings.components.csp import (
+    CSP_CONNECT_SRC,
+    CSP_IMG_SRC,
+)
 
 # Production flags:
 # https://docs.djangoproject.com/en/4.2/howto/deployment/
@@ -74,3 +78,6 @@ SECURE_REDIRECT_EXEMPT = [
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+CSP_IMG_SRC += ('data:',)
+CSP_CONNECT_SRC += ("'self'",)
