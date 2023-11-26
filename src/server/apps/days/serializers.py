@@ -10,7 +10,7 @@ class WordSerializer(ModelSerializer):
     class Meta:
 
         model = Word
-        fields = '__all__'
+        fields = ('id', 'meaning', 'translation')
 
 
 class StudyDaySerializer(ModelSerializer):
