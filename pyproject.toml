@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 
-django = { version = "^4.2", extras = ["argon2"] }
+django = { version = "^5.0.0", extras = ["argon2"] }
 django-split-settings = "^1.2"
 django-axes = "^6.1"
 django-csp = "^3.7"
