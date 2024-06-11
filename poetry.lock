@@ -755,12 +755,12 @@ test = ["pytest"]
 
 [[package]]
 name = "flake8-logging-format"
-version = "0.9.0"
+version = "2024.24.12"
 description = ""
 optional = false
 python-versions = "*"
 files = [
-    {file = "flake8-logging-format-0.9.0.tar.gz", hash = "sha256:e830cc49091e4b8ab9ea3da69a3da074bd631ce9a7db300e5c89fb48ba4a6986"},
+    {file = "flake8_logging_format-2024.24.12-py3-none-any.whl", hash = "sha256:7d93c2107354b10a05b1a0d8ccd3a9bfb793aee108007765114c958a7541d674"},
 ]
 
 [package.extras]
@@ -1935,4 +1935,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "6f5796a0a8588faecf99e27be8cf6d807b57096a7cdc3c6b96112a135ae19070"
+content-hash = "314c5877917ec28f068457cf30f064d085a0789d19369e50760ffcae807c22f4"
