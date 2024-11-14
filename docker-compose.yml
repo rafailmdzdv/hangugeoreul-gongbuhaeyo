@@ -21,7 +21,7 @@ services:
       - db
 
   db:
-    image: postgres:17.0
+    image: postgres:17.1
     ports:
       - 5433:5432
     expose:
