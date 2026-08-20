@@ -24,11 +24,11 @@ This is a default option for older and more complicated projects.
 Dependencies
 ------------
 
-We use ``poetry`` to manage dependencies.
+We use ``uv`` to manage dependencies.
 So, please do not use ``virtualenv`` or ``pip`` directly.
 Before going any further, please,
-take a moment to read the `official documentation <https://python-poetry.org/docs/>`_
-about ``poetry`` to know some basics.
+take a moment to read the `official documentation <https://docs.astral.sh/uv/guides/>`_
+about ``uv`` to know some basics.
 
 If you are using ``docker`` then prepend ``docker compose run --rm web``
 before any of those commands to execute them.
@@ -43,46 +43,47 @@ Installing dependencies
 You do not need to run any of these commands for ``docker`` based development,
 since it is already executed inside ``Dockerfile``.
 
-Please, note that ``poetry`` will automatically create a ``virtualenv`` for
+Please, note that ``uv`` will automatically create a ``virtualenv`` for
 this project. It will use your current ``python`` version.
 To install all existing dependencies run:
 
 .. code:: bash
 
-  poetry install
+  uv sync
 
 To install dependencies for production use, you will need to run:
 
 .. code:: bash
 
-  poetry install --only=main
+  uv install --no-dev
 
 To install all dependencies, including docs:
 
 .. code:: bash
 
-  poetry install --with=docs
+  uv install --all-groups
 
-And to activate ``virtualenv`` created by ``poetry`` run:
+And to activate ``virtualenv`` created by ``uv`` run:
 
 .. code:: bash
 
-  poetry shell
+  source ./.venv/bin/activate  # bash, zsh
+  source ./.venv/bin/activate.fish  # fish
 
 Adding new dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 To add a new dependency you can run:
 
-- ``poetry add django`` to install ``django`` as a production dependency
-- ``poetry add -G dev pytest`` to install ``pytest``
+- ``uv add django`` to install ``django`` as a production dependency
+- ``uv add --group dev pytest`` to install ``pytest``
   as a development dependency
-- ``poetry add -G docs some-sphinx-plugin`` to install ``some-sphinx-plugin``
+- ``uv add --group docs some-sphinx-plugin`` to install ``some-sphinx-plugin``
   as a documentation dependency
 
 This command might be used with ``docker``.
 
-Updating poetry version
+Updating uv version
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Package managers should also be pinned very strictly.
@@ -92,12 +93,12 @@ because we were not pinning package manager versions.
 This can result in broken ``lock`` files, inconsistent installation process,
 bizarre bugs, and missing packages. You do not want to experience that!
 
-How can we have the same ``poetry`` version for all users in a project?
+How can we have the same ``uv`` version for all users in a project?
 That's where ``[build-system]`` tag shines. It specifies the exact version of
-your ``poetry`` installation that must be used for the project.
+your ``uv`` installation that must be used for the project.
 Version mismatch will fail your build.
 
-When you want to update ``poetry``, you have to bump it in several places:
+When you want to update ``uv``, you have to bump it in several places:
 
 1. ``pyproject.toml``
 2. ``docker/django/Dockerfile``
@@ -121,11 +122,11 @@ Running scripts inside docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As we have already mentioned inside the previous section
-we use ``docker compose run`` to run scripts inside docker.
+we use ``docker compose run`` or ``docker compose exec`` to run scripts inside docker.
 
 What do you need to know about it?
 
-1. You can run anything you want: ``poetry``, ``python``, ``sh``, etc
+1. You can run anything you want: ``uv``, ``python``, ``sh``, etc
 2. Most likely it will have a permanent effect, due to ``docker volumes``
 3. You need to use ``--rm`` to automatically remove this container afterward
 
@@ -139,7 +140,7 @@ need to configure it properly,
 see :ref:`django` section for more information.
 
 **Note**, that you will need to activate ``virtualenv`` created
-by ``poetry`` before running any of these commands.
+by ``uv`` before running any of these commands.
 **Note**, that you only need to run these commands once per project.
 
 Local database
@@ -148,11 +149,11 @@ Local database
 When using local development environment without ``docker``,
 you will need a ``postgres`` up and running.
 To create new development database run
-(make sure that database and user names are correct for your case):
+(make sure that database, user names and host are correct for your case):
 
 .. code:: bash
 
-  psql postgres -U postgres -f scripts/create_dev_database.sql
+  createdb -U postgres -h localhost ssaem
 
 Then migrate your database:
 

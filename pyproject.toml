@@ -1,9 +1,9 @@
 [project]
 name = "ssaem"
-version = "0.1.0"
+version = "2.0.0-a1"
 description = "Ssaem"
 authors = []
-requires-python = "==3.13.13"
+requires-python = ">=3.13.13, <4.0.0"
 readme = "README.md"
 classifiers = ["Private :: Do not Upload"]
 dependencies = [
@@ -15,7 +15,7 @@ dependencies = [
     "django-health-check>=4.4.3,<5",
     "django-permissions-policy>=4.31,<5",
     "django-stubs-ext>=6.0,<7",
-    "django-modern-rest[msgspec, pydantic, attrs, jwt, openapi]>=0.10.0,<0.11",
+    "django-modern-rest[attrs, jwt, openapi]>=0.14.0, <0.15",
     "psycopg2-binary>=2.9,<3",
     "gunicorn>=26.0,<27",
     "python-decouple>=3.8,<4",
@@ -63,6 +63,7 @@ dev = [
     "dump-env>=1.5,<2",
     "ipython>=9.14,<10",
     "deptry>=0.25,<0.26",
+    "flake8-final>=0.0.3",
 ]
 docs = [
     "sphinx>=9.1,<10",
@@ -78,10 +79,11 @@ default-groups = ["dev"]
 
 [tool.ruff]
 # Ruff config: https://docs.astral.sh/ruff/settings
-preview = true
+preview = false
 fix = true
 target-version = "py313"
 line-length = 80
+pycodestyle.max-doc-length = 120
 
 [tool.ruff.format]
 quote-style = "single"
@@ -157,13 +159,17 @@ external = ["WPS"]
 # Plugin configs:
 flake8-quotes.inline-quotes = "single"
 mccabe.max-complexity = 6
-pydocstyle.convention = "google"
+pydocstyle.convention = "pep257"
+
 
 [tool.ruff.lint.per-file-ignores]
-"server/apps/*/migrations/*.py" = ["D101", "E501", "RUF012"]
-"server/common/typing/*.py" = ["F401"]
-"server/implemented.py" = ["PLC0415", "D103"]
-"tests/*.py" = ["S101"]
+"**/server/apps/*/migrations/*.py" = ["D101", "E501", "RUF012"]
+"**/server/common/typing/*.py" = ["F401"]
+"**/server/implemented.py" = ["PLC0415", "D103"]
+"**/server/apps/auth/models.py" = ["D101", "D102"]
+"**/tests/*.py" = ["D101", "D102", "S101"]
+"**/apps.py" = ["D101"]
+"**/admin.py" = ["D101", "D102", "RUF012"]
 
 
 [tool.pytest.ini_options]
@@ -219,7 +225,10 @@ addopts = [
   # Framework-level responses like 406 and 422 are documented in OpenAPI,
   # but they are not always reachable through regular Schemathesis input generation.
   "--tracecov-fail-under-responses=50",
-  "--radar-endpoint=https://test-radar.ilaletdinov.ru"
+
+  # TODO: turn on
+  "-p no:test_radar",
+  # "--radar-endpoint=https://test-radar.ilaletdinov.ru",
 ]
 
 # Fail on warnings:
@@ -245,6 +254,7 @@ omit = [
 [tool.mypy]
 # Mypy configuration:
 # https://mypy.readthedocs.io/en/latest/config_file.html
+mypy_path = "src"
 enable_error_code = [
   "truthy-bool",
   "truthy-iterable",

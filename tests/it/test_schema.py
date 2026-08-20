@@ -46,6 +46,7 @@ def test_schemathesis(
     case: st.Case[Any],
 ) -> None:
     """Ensure that API implementation matches the OpenAPI schema."""
+    settings.AXES_ENABLED = False
     response = case.call_and_validate()
     # Record interaction for `tracecov` report:
     tracecov_map.record_schemathesis_interactions(

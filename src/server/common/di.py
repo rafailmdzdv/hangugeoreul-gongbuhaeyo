@@ -4,6 +4,7 @@ from typing import Any, final
 import punq
 
 
+@final
 class HasContainer:
     """
     Base class for all parts that use ``resolve()`` function.

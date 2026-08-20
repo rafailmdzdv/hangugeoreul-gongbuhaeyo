@@ -1,15 +1,12 @@
-Welcome to wemake-django-template's documentation!
+Welcome to ssaem's documentation!
 ==================================================
 
 
-What this project is all about?
-The main idea of this project is to provide a fully configured
-template for ``django`` projects, where code quality, testing,
-documentation, security, and scalability are number one priorities.
-
-This template is a result of implementing
-`our processes <https://github.com/wemake-services/meta>`_,
-it should not be considered as an independent part.
+What is this project all about?
+The main idea of this project is to help users learn Korean (for now) by generating
+sentences based on their specific vocabulary and known grammar points.
+I have been using this method to learn the language with the help of LLMs.
+However, constantly providing an updated list of vocabulary and grammar rules to the LLM was difficult. Since I already had a vocabulary learning project, I decided to take it to the next level and integrate an LLM directly into it.
 
 
 Goals
@@ -31,20 +28,8 @@ Limitations
 This project implies that:
 
 - You are using ``docker`` for deployment
-- You are using Gitlab and Gitlab CI
 - You are not using any frontend assets in ``django``,
   you store your frontend separately
-
-
-Should I choose this template?
-------------------------------
-
-This template is oriented on big projects,
-when there are multiple people working on it for a long period of time.
-
-If you want to simply create a working prototype without all these
-limitations and workflows - feel free to choose any
-`other template <https://github.com/audreyr/cookiecutter#python-django>`_.
 
 
 How to start
@@ -79,7 +64,6 @@ There are multiple processes that you need to get familiar with:
    pages/template/linters.rst
    pages/template/testing.rst
    pages/template/security.rst
-   pages/template/gitlab-ci.rst
 
 .. toctree::
    :maxdepth: 2
@@ -93,7 +77,6 @@ There are multiple processes that you need to get familiar with:
    :caption: Extras:
 
    pages/template/upgrading-template.rst
-   pages/template/faq.rst
    pages/template/troubleshooting.rst
 
 
