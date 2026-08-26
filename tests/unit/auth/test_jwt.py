@@ -3,10 +3,11 @@
 
 from datetime import timedelta
 
+from jwt.exceptions import InvalidKeyError
 import pytest
 from django.conf import settings
 from django.utils import timezone
-
+from dmr.exceptions import NotAuthenticatedError
 from dmr.security.jwt.token import JWToken
 
 _ALGORITHM = 'HS256'
@@ -21,7 +22,11 @@ def test_token_encode_decode_roundtrip() -> None:
         extras={'type': 'access'},
     )
     encoded = token.encode(secret=settings.SECRET_KEY, algorithm=_ALGORITHM)
-    decoded = JWToken.decode(encoded, secret=settings.SECRET_KEY, algorithm=_ALGORITHM)
+    decoded = JWToken.decode(
+        encoded,
+        secret=settings.SECRET_KEY,
+        algorithm=_ALGORITHM,
+    )
 
     assert decoded.sub == '42'
     assert decoded.jti == 'unique-id-1'
@@ -37,14 +42,21 @@ def test_token_with_refresh_type() -> None:
         extras={'type': 'refresh'},
     )
     encoded = token.encode(secret=settings.SECRET_KEY, algorithm=_ALGORITHM)
-    decoded = JWToken.decode(encoded, secret=settings.SECRET_KEY, algorithm=_ALGORITHM)
+    decoded = JWToken.decode(
+        encoded,
+        secret=settings.SECRET_KEY,
+        algorithm=_ALGORITHM,
+    )
 
     assert decoded.extras['type'] == 'refresh'
 
 
 @pytest.mark.django_db
 def test_token_with_past_expiry_fails_at_creation() -> None:
-    with pytest.raises(ValueError, match='exp value must be a datetime in the future'):
+    with pytest.raises(
+        ValueError,
+        match='exp value must be a datetime in the future',
+    ):
         JWToken(
             sub='1',
             exp=timezone.now() - timedelta(hours=1),
@@ -55,7 +67,7 @@ def test_token_with_past_expiry_fails_at_creation() -> None:
 
 @pytest.mark.django_db
 def test_token_decode_expired_token() -> None:
-    import jwt as pyjwt
+    import jwt as pyjwt  # noqa: PLC0415
 
     payload = {
         'sub': '1',
@@ -64,10 +76,18 @@ def test_token_decode_expired_token() -> None:
         'jti': 'expired-decode-id',
         'type': 'access',
     }
-    encoded = pyjwt.encode(payload, key=settings.SECRET_KEY, algorithm=_ALGORITHM)
+    encoded = pyjwt.encode(
+        payload,
+        key=settings.SECRET_KEY,
+        algorithm=_ALGORITHM,
+    )
 
-    with pytest.raises(Exception):
-        JWToken.decode(encoded, secret=settings.SECRET_KEY, algorithm=_ALGORITHM)
+    with pytest.raises(NotAuthenticatedError):
+        JWToken.decode(
+            encoded,
+            secret=settings.SECRET_KEY,
+            algorithm=_ALGORITHM,
+        )
 
 
 @pytest.mark.django_db
@@ -81,7 +101,7 @@ def test_wrong_secret_raises() -> None:
     long_key = 'correct-secret-key-that-is-long-enough-for-hmac'
     encoded = token.encode(secret=long_key, algorithm=_ALGORITHM)
 
-    with pytest.raises(Exception):
+    with pytest.raises(InvalidKeyError):
         JWToken.decode(encoded, secret='wrong-secret', algorithm=_ALGORITHM)
 
 
@@ -95,7 +115,11 @@ def test_token_preserves_issuer() -> None:
         extras={'type': 'access'},
     )
     encoded = token.encode(secret=settings.SECRET_KEY, algorithm=_ALGORITHM)
-    decoded = JWToken.decode(encoded, secret=settings.SECRET_KEY, algorithm=_ALGORITHM)
+    decoded = JWToken.decode(
+        encoded,
+        secret=settings.SECRET_KEY,
+        algorithm=_ALGORITHM,
+    )
 
     assert decoded.iss == 'my-app'
 
@@ -110,6 +134,10 @@ def test_token_preserves_audiences() -> None:
         extras={'type': 'access'},
     )
     encoded = token.encode(secret=settings.SECRET_KEY, algorithm=_ALGORITHM)
-    decoded = JWToken.decode(encoded, secret=settings.SECRET_KEY, algorithm=_ALGORITHM)
+    decoded = JWToken.decode(
+        encoded,
+        secret=settings.SECRET_KEY,
+        algorithm=_ALGORITHM,
+    )
 
     assert decoded.aud == 'my-audience'

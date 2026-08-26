@@ -3,6 +3,7 @@
 
 from collections.abc import Iterator
 from datetime import timedelta
+from io import BytesIO
 from typing import Final, Literal
 
 import jwt as pyjwt
@@ -12,17 +13,17 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils import timezone
 from dmr.security.jwt.token import JWToken
 from PIL import Image
-from io import BytesIO
 
 User: Final = get_user_model()
 _TOKEN_TYPE = Literal['access', 'refresh']
+_DEFAULT_TOKEN_TYPE: _TOKEN_TYPE = 'access'
 
 DEFAULT_EMAIL: Final = 'user@example.com'
 DEFAULT_PASSWORD: Final = 'testpass123'
 _ALGORITHM: Final = 'HS256'
 
 
-@pytest.fixture()
+@pytest.fixture
 def create_user(transactional_db: None) -> Iterator[User]:
     User.objects.create_user(
         email=DEFAULT_EMAIL,
@@ -31,10 +32,10 @@ def create_user(transactional_db: None) -> Iterator[User]:
         last_name='Doe',
         source_language='en',
     )
-    yield User.objects.get(email=DEFAULT_EMAIL)
+    return User.objects.get(email=DEFAULT_EMAIL)
 
 
-@pytest.fixture()
+@pytest.fixture
 def create_superuser(transactional_db: None) -> Iterator[User]:
     User.objects.create_superuser(
         email='admin@example.com',
@@ -42,15 +43,15 @@ def create_superuser(transactional_db: None) -> Iterator[User]:
         first_name='Admin',
         last_name='User',
     )
-    yield User.objects.get(email='admin@example.com')
+    return User.objects.get(email='admin@example.com')
 
 
 def make_jwt_token(
     user_id: int,
     *,
-    token_type: _TOKEN_TYPE = 'access',
+    token_type: _TOKEN_TYPE = _DEFAULT_TOKEN_TYPE,
 ) -> str:
-    from django.conf import settings as django_settings
+    from django.conf import settings as django_settings  # noqa: PLC0415
 
     return JWToken(
         sub=str(user_id),
@@ -66,9 +67,9 @@ def make_jwt_token(
 def make_expired_jwt_token(
     user_id: int,
     *,
-    token_type: _TOKEN_TYPE = 'access',
+    token_type: _TOKEN_TYPE = _DEFAULT_TOKEN_TYPE,
 ) -> str:
-    from django.conf import settings as django_settings
+    from django.conf import settings as django_settings  # noqa: PLC0415
 
     now = timezone.now()
     payload = {
@@ -90,4 +91,8 @@ def create_test_avatar() -> SimpleUploadedFile:
     buffer = BytesIO()
     image.save(buffer, format='PNG')
     buffer.seek(0)
-    return SimpleUploadedFile('avatar.png', buffer.read(), content_type='image/png')
+    return SimpleUploadedFile(
+        'avatar.png',
+        buffer.read(),
+        content_type='image/png',
+    )

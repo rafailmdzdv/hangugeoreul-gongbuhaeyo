@@ -8,7 +8,7 @@ from typing import final, override
 
 from django.conf import settings
 from django.utils import timezone
-from dmr import Controller, modify, Body
+from dmr import Body, Controller, modify
 from dmr.parsers import MultiPartParser
 from dmr.plugins.msgspec import MsgspecSerializer
 from dmr.security.jwt import JWTSyncAuth, request_jwt
@@ -25,16 +25,16 @@ from dmr.security.jwt.views import (
 )
 
 from server.apps.auth.auth import jwt_blocklist_auth
+from server.apps.auth.forms import UploadAvatarForm
 from server.apps.auth.models import User
 from server.apps.auth.schemas import (
     ObtainTokensPayload,
     RefreshTokenResponse,
     UpdateUserPayload,
     UpdateUserResponse,
+    UploadAvatarResponse,
     UserResponse,
-    UploadAvatarResponse
 )
-from server.apps.auth.forms import UploadAvatarForm
 
 
 class _TokenType(Enum):
@@ -175,7 +175,20 @@ class UpdateUserAvatarController(Controller[MsgspecSerializer]):
     auth = (JWTSyncAuth(),)
 
     def post(self) -> UploadAvatarResponse:
-        form = UploadAvatarForm(self.request.POST, self.request.FILES, instance=self.request.user)
+        """Upload the new user avatar."""
+        form = UploadAvatarForm(
+            self.request.POST,
+            self.request.FILES,
+            instance=self.request.user,
+        )
         if form.is_valid():
             form.save()
-        return {'avatar_url': self.request.build_absolute_uri(self.request.user.avatar.url)}
+        return {
+            'avatar_url': self.request.build_absolute_uri(
+                self.request.user.avatar.url,
+            ),
+        }
+
+
+# TODO #217:30min Add the sign up controller
+# TODO #217 Add OAuth 2.0

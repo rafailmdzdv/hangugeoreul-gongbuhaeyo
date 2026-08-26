@@ -168,7 +168,7 @@ pydocstyle.convention = "pep257"
 "**/server/common/typing/*.py" = ["F401"]
 "**/server/implemented.py" = ["PLC0415", "D103"]
 "**/server/apps/auth/models.py" = ["D101", "D102"]
-"**/tests/*.py" = ["D101", "D102", "S101"]
+"**/tests/*.py" = ["D101", "D102", "D103", "S101", "S105", "S106"]
 "**/apps.py" = ["D101"]
 "**/admin.py" = ["D101", "D102", "RUF012"]
 

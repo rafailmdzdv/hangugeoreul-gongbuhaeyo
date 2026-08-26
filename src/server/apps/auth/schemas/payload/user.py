@@ -4,7 +4,6 @@
 from typing import TypedDict, final
 
 
-
 @final
 class UpdateUserPayload(TypedDict, total=False):
     """User fields provided to update a user."""

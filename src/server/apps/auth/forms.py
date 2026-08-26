@@ -10,6 +10,8 @@ from server.apps.auth import models
 
 @final
 class UploadAvatarForm(forms.ModelForm):
+    """Form used to upload a user's avatar."""
+
     @final
     class Meta:
         model = models.User

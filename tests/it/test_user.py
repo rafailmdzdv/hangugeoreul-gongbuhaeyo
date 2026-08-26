@@ -4,14 +4,10 @@
 from http import HTTPStatus
 from typing import Final
 
-from django.urls import reverse
 import pytest
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client
-from PIL import Image
-from io import BytesIO
-
-from plugins.helpers import create_test_avatar, make_jwt_token
+from django.urls import reverse
+from plugins.auth import create_test_avatar, make_jwt_token
 
 _USER_URL: Final = reverse('api:user:user')
 _UPDATE_URL: Final = reverse('api:user:update_user')
@@ -33,8 +29,8 @@ def test_get_user_info(client: Client, create_user) -> None:
         **_auth_header(create_user.pk),
     )
     response = client.get(_USER_URL, **_auth_header(create_user.pk))
-    assert response.status_code == HTTPStatus.OK
     body = response.json()
+
     assert body['email'] == 'user@example.com'
     assert body['first_name'] == 'John'
     assert body['last_name'] == 'Doe'

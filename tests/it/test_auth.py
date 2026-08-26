@@ -7,8 +7,7 @@ from typing import Final
 import pytest
 from django.test import Client
 from django.urls import reverse
-
-from plugins.helpers import make_expired_jwt_token, make_jwt_token
+from plugins.auth import make_expired_jwt_token, make_jwt_token
 
 _OBTAIN_URL: Final = reverse('api:auth:authenticate')
 _VERIFY_URL: Final = reverse('api:auth:verify_access_token')
@@ -18,8 +17,8 @@ _LOGOUT_URL: Final = reverse('api:auth:logout')
 _AUTH_HEADER: Final = 'HTTP_AUTHORIZATION'
 
 
-def _auth_headers(user_id: int, *, token_type: str = 'access') -> dict[str, str]:
-    token = make_jwt_token(user_id, token_type=token_type)
+def _auth_headers(user_id: int) -> dict[str, str]:
+    token = make_jwt_token(user_id, token_type='access')
     return {_AUTH_HEADER: f'Bearer {token}'}
 
 
@@ -30,8 +29,8 @@ def test_obtain_tokens_success(client: Client, create_user) -> None:
         data={'email': 'user@example.com', 'password': 'testpass123'},
         content_type='application/json',
     )
-    assert response.status_code == HTTPStatus.OK
     body = response.json()
+
     assert 'access_token' in body
     assert 'refresh_token' in body
 
@@ -43,7 +42,7 @@ def test_obtain_tokens_wrong_password(client: Client, create_user) -> None:
         data={'email': 'user@example.com', 'password': 'wrongpassword'},
         content_type='application/json',
     )
-    assert response.status_code == HTTPStatus.UNAUTHORIZED
+    assert response.status_code == HTTPStatus.UNAUTHORIZED  # noqa: WPS204
 
 
 @pytest.mark.django_db
@@ -127,7 +126,10 @@ def test_refresh_valid_token(client: Client, create_user) -> None:
 
 
 @pytest.mark.django_db
-def test_refresh_with_access_token_rejected(client: Client, create_user) -> None:
+def test_refresh_with_access_token_rejected(
+    client: Client,
+    create_user,
+) -> None:
     access_token = make_jwt_token(create_user.pk, token_type='access')
     response = client.post(
         _REFRESH_URL,

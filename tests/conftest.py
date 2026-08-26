@@ -12,5 +12,5 @@ It may be also used for extending doctest's context:
 pytest_plugins = [
     'plugins.django_settings',
     'plugins.tracecov_map',
-    'plugins.helpers',
+    'plugins.auth',
 ]

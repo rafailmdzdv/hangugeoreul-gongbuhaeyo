@@ -57,7 +57,7 @@ class TestUserModel(django.TestCase):
             email='dup@example.com',
             password='pass123',
         )
-        with self.assertRaises(IntegrityError):
+        with self.assertRaises(IntegrityError):  # noqa: PT027
             UserModel.objects.create_user(
                 email='dup@example.com',
                 password='pass456',

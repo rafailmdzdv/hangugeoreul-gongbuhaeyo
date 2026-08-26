@@ -6,8 +6,8 @@ from server.apps.auth.schemas.payload.user import UpdateUserPayload
 from server.apps.auth.schemas.response.token import RefreshTokenResponse
 from server.apps.auth.schemas.response.user import (
     UpdateUserResponse,
-    UserResponse,
     UploadAvatarResponse,
+    UserResponse,
 )
 
 __all__ = (
@@ -15,6 +15,6 @@ __all__ = (
     'RefreshTokenResponse',
     'UpdateUserPayload',
     'UpdateUserResponse',
-    'UserResponse',
     'UploadAvatarResponse',
+    'UserResponse',
 )

@@ -41,6 +41,10 @@ user_router: Final = Router(
     (
         path('', UserController.as_view(), name='user'),
         path('update/', UpdateUserController.as_view(), name='update_user'),
-        path('upload_avatar/', UpdateUserAvatarController.as_view(), name='upload_avatar'),
+        path(
+            'upload_avatar/',
+            UpdateUserAvatarController.as_view(),
+            name='upload_avatar',
+        ),
     ),
 )
