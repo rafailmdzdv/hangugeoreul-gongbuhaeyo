@@ -1,3 +1,6 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 """
 Main URL mapping configuration file.
 
@@ -25,17 +28,18 @@ from server.apps.auth import urls as auth_urls
 admin.autodiscover()
 
 router = Router(
-    'api/',
-    [
-        path('auth/', include(auth_urls, namespace='auth')),
-    ],
+    'api/v1/',
+    (
+        auth_urls.auth_router.to_urlpatterns(namespace='auth'),
+        auth_urls.user_router.to_urlpatterns(namespace='user'),
+    ),
 )
 schema = build_schema(router)
 
 
-urlpatterns = [
+urlpatterns = (
+    router.to_urlpatterns(namespace='api', app_name='server'),
     # Health checks:
-    path(router.prefix, include((router.urls, 'server'), namespace='api')),
     path(
         'health/',
         HealthCheckView.as_view(
@@ -78,16 +82,16 @@ urlpatterns = [
         ),
         name='humans_txt',
     ),
-]
+)
 
 if settings.DEBUG:  # pragma: no cover
     import debug_toolbar
     from django.conf.urls.static import static
 
-    urlpatterns = [
+    urlpatterns = (
         # URLs specific only to django-debug-toolbar:
         path('__debug__/', include(debug_toolbar.urls)),
         *urlpatterns,
         # Serving media files in development only:
         *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
-    ]
+    )

@@ -21,6 +21,7 @@ dependencies = [
     "python-decouple>=3.8,<4",
     "structlog>=26.1,<27",
     "punq>=0.8,<0.9",
+    "pillow>=12.3.0",
 ]
 
 [build-system]
@@ -226,9 +227,7 @@ addopts = [
   # but they are not always reachable through regular Schemathesis input generation.
   "--tracecov-fail-under-responses=50",
 
-  # TODO: turn on
-  "-p no:test_radar",
-  # "--radar-endpoint=https://test-radar.ilaletdinov.ru",
+  "--radar-endpoint=https://test-radar.ilaletdinov.ru",
 ]
 
 # Fail on warnings:

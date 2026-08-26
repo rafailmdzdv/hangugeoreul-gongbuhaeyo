@@ -1,3 +1,6 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 import logging
 from collections.abc import Iterator
 from typing import Any
@@ -46,7 +49,6 @@ def test_schemathesis(
     case: st.Case[Any],
 ) -> None:
     """Ensure that API implementation matches the OpenAPI schema."""
-    settings.AXES_ENABLED = False
     response = case.call_and_validate()
     # Record interaction for `tracecov` report:
     tracecov_map.record_schemathesis_interactions(

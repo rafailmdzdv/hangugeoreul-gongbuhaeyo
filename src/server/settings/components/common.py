@@ -1,3 +1,6 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 """
 Django settings for server project.
 
@@ -33,6 +36,7 @@ INSTALLED_APPS: tuple[str, ...] = (
     'django.contrib.admindocs',
     # django-modern-rest:
     'dmr',
+    'dmr.security.jwt.blocklist',
     'corsheaders',
     # Security:
     'axes',

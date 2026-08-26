@@ -1,3 +1,6 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 from datetime import timedelta
 from enum import Enum
 from http import HTTPStatus
@@ -5,9 +8,10 @@ from typing import final, override
 
 from django.conf import settings
 from django.utils import timezone
-from dmr import Controller, modify
+from dmr import Controller, modify, Body
+from dmr.parsers import MultiPartParser
 from dmr.plugins.msgspec import MsgspecSerializer
-from dmr.security.jwt import request_jwt
+from dmr.security.jwt import JWTSyncAuth, request_jwt
 from dmr.security.jwt.views import (
     ObtainTokensPayload as DmrObtainTokensPayload,
 )
@@ -21,7 +25,16 @@ from dmr.security.jwt.views import (
 )
 
 from server.apps.auth.auth import jwt_blocklist_auth
-from server.apps.auth.dto import ObtainTokensPayload, RefreshTokenResponse
+from server.apps.auth.models import User
+from server.apps.auth.schemas import (
+    ObtainTokensPayload,
+    RefreshTokenResponse,
+    UpdateUserPayload,
+    UpdateUserResponse,
+    UserResponse,
+    UploadAvatarResponse
+)
+from server.apps.auth.forms import UploadAvatarForm
 
 
 class _TokenType(Enum):
@@ -120,3 +133,49 @@ class LogoutController(Controller[MsgspecSerializer]):
                 strict=True,
             ),
         )
+
+
+@final
+class UserController(Controller[MsgspecSerializer]):
+    """Acquire user information."""
+
+    auth = (JWTSyncAuth(),)
+
+    def get(self) -> UserResponse:
+        """Retrieve user information."""
+        return {
+            'email': self.request.user.email,
+            'first_name': self.request.user.first_name or '',
+            'last_name': self.request.user.last_name or '',
+            'source_language': self.request.user.source_language,
+            'avatar_url': self.request.build_absolute_uri(
+                self.request.user.avatar.url,
+            )
+            or '',
+        }
+
+
+@final
+class UpdateUserController(Controller[MsgspecSerializer]):
+    """Update user fields."""
+
+    auth = (JWTSyncAuth(),)
+
+    def patch(self, parsed_body: Body[UpdateUserPayload]) -> UpdateUserResponse:
+        """Update user information."""
+        User.objects.filter(pk=self.request.user.pk).update(**parsed_body)
+        return {'success': True}
+
+
+@final
+class UpdateUserAvatarController(Controller[MsgspecSerializer]):
+    """Update the user avatar."""
+
+    parsers = (MultiPartParser(),)
+    auth = (JWTSyncAuth(),)
+
+    def post(self) -> UploadAvatarResponse:
+        form = UploadAvatarForm(self.request.POST, self.request.FILES, instance=self.request.user)
+        if form.is_valid():
+            form.save()
+        return {'avatar_url': self.request.build_absolute_uri(self.request.user.avatar.url)}

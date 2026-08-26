@@ -1,3 +1,6 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 from typing import final, override
 
 from django.contrib.auth.hashers import make_password
@@ -76,6 +79,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         choices=Language.choices,
         default=Language.EN,
     )
+    avatar = models.ImageField(upload_to='user/avatar/')
 
     USERNAME_FIELD = 'email'
 

@@ -1,3 +1,6 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 import pytest
 from django.conf import LazySettings
 
@@ -33,3 +36,9 @@ def _debug(settings: LazySettings) -> None:
     settings.DEBUG = False
     for template in settings.TEMPLATES:
         template['OPTIONS']['debug'] = True
+
+
+@pytest.fixture(autouse=True)
+def _disable_axes_backend(settings: LazySettings) -> None:
+    """Disable Axes during tests."""
+    settings.AXES_ENABLED = False

@@ -1,3 +1,6 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 # Logging
 # https://docs.djangoproject.com/en/6.0/topics/logging/
 
