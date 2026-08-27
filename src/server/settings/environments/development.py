@@ -1,3 +1,6 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 """
 This file contains all the settings that defines the development server.
 
@@ -111,10 +114,12 @@ _CSP_DIRECTIVES['connect-src'] += [SELF]
 
 # django-cors-headers
 
-CORS_ALLOWED_ORIGINS.extend([
-    'http://localhost',
-    'http://127.0.0.1',
-])
+CORS_ALLOWED_ORIGINS.extend(
+    [
+        'http://localhost',
+        'http://127.0.0.1',
+    ],
+)
 
 
 # django-zeal
@@ -128,7 +133,9 @@ ZEAL_RAISE = True  # comment out if you want to allow N+1 requests
 ZEAL_SHOW_ALL_CALLERS = True
 ZEAL_LOGGER = logging.getLogger('django')
 ZEAL_ALLOWLIST = [
-    {'model': 'admin.*'},
+    {
+        'model': 'auth.*',
+    },
 ]
 
 

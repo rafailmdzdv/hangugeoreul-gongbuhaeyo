@@ -1,9 +1,13 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 import importlib
 from typing import Any, final
 
 import punq
 
 
+@final
 class HasContainer:
     """
     Base class for all parts that use ``resolve()`` function.

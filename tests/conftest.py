@@ -1,3 +1,6 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 """
 This module is used to provide configuration, fixtures, and plugins for pytest.
 
@@ -7,9 +10,7 @@ It may be also used for extending doctest's context:
 """
 
 pytest_plugins = [
-    # Should be the first custom one:
     'plugins.django_settings',
     'plugins.tracecov_map',
-    # add your own plugins here!
-    'plugins.main.main_templates',
+    'plugins.auth',
 ]

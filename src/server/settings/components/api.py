@@ -1,3 +1,6 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# SPDX-License-Identifier: MIT
+
 import tomllib
 from typing import Any, cast
 
@@ -21,7 +24,7 @@ def _get_project_meta() -> dict[str, str]:  # lying about return type
 DMR_SETTINGS: Any = {
     # Default OpenAPI config:
     Settings.openapi_config: OpenAPIConfig(
-        title='wemake-django-template',
+        title='Ssaem',
         version=_get_project_meta()['version'],
     ),
     # Generate fake examples in OpenAPI:

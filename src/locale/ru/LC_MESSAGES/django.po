@@ -1,0 +1,54 @@
+# Copyright © 2026 Rafail Medzhidov <rafayt323@gmail.com>
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# SPDX-License-Identifier: MIT
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-19 20:33+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: server/apps/auth/models.py:51 server/settings/components/common.py:105
+msgid "Russian"
+msgstr "Русский"
+
+#: server/apps/auth/models.py:52 server/settings/components/common.py:104
+msgid "English"
+msgstr "Английский"
+
+#: server/apps/auth/models.py:54
+msgid "Email address"
+msgstr "Эл. почта"
+
+#: server/apps/auth/models.py:56
+msgid "First name"
+msgstr "Имя"
+
+#: server/apps/auth/models.py:61
+msgid "Last name"
+msgstr "Фамилия"
+
+#: server/apps/auth/models.py:66
+msgid "Is staff"
+msgstr "Персонал"
+
+#: server/apps/auth/models.py:69
+msgid "Source language"
+msgstr "Основной язык"
+
+#: server/apps/auth/models.py:80
+msgid "User"
+msgstr "Пользователь"
+
+#: server/apps/auth/models.py:81
+msgid "Users"
+msgstr "Пользователи"

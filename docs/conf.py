@@ -24,7 +24,7 @@ import django
 
 # We need `server` to be importable from here:
 _ROOT = Path('..').resolve(strict=True)
-sys.path.insert(0, str(_ROOT))
+sys.path.insert(0, str(_ROOT.joinpath('src')))
 
 # Django setup, all deps must be present to succeed:
 os.environ.setdefault('DJANGO_ENV', 'production')
